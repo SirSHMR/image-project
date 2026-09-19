@@ -64,11 +64,11 @@ analyzeBtn.addEventListener('click', async () => {
   try {
     const res = await fetch('/api/analyze', { method: 'POST', body: formData });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || 'تعذّر تحليل هذا الملف.');
+    if (!res.ok) throw new Error(data.detail || 'ما نقدر نحلل لك ');
     renderReport(data);
     showOnly(report);
   } catch (err) {
-    errorBox.textContent = err.message || 'حدث خطأ غير متوقع أثناء تحليل الملف.';
+    errorBox.textContent = err.message || 'صار في خطا وقت التحليل';
     showOnly(errorBox);
   }
 });
@@ -128,21 +128,21 @@ function renderHighlights(h) {
     link.textContent = `${h.location.lat}, ${h.location.lon}`;
     box.appendChild(highlightCard('مكان التصوير', 'عرض على الخريطة ↗', { sub: link }));
   } else {
-    box.appendChild(highlightCard('مكان التصوير', 'لا توجد بيانات موقع', { muted: true }));
+    box.appendChild(highlightCard('مكان التصوير', 'مافيه بيانات للموقع', { muted: true }));
   }
 
   // تاريخ التصوير
   box.appendChild(
     h.captured_at
       ? highlightCard('تاريخ التصوير', h.captured_at)
-      : highlightCard('تاريخ التصوير', 'غير متوفر', { muted: true })
+      : highlightCard('تاريخ التصوير', 'ماله موقع', { muted: true })
   );
 
   // الجهاز
   box.appendChild(
     h.device
       ? highlightCard('جهاز التصوير', h.device)
-      : highlightCard('جهاز التصوير', 'غير متوفر', { muted: true })
+      : highlightCard('جهاز التصوير', 'ماله جهاز تصوير', { muted: true })
   );
 
   // الجودة
@@ -183,7 +183,7 @@ function renderReport(data) {
     ['الصيغة', fp.format || '—'],
     ['الأبعاد', fp.dimensions ? `${fp.dimensions.width} × ${fp.dimensions.height}px` : '—'],
     ['نوع ضغط الألوان (Chroma subsampling)', fp.subsampling || '—'],
-    ['جودة JPEG المقدَّرة', fp.estimated_jpeg_quality ? `~${fp.estimated_jpeg_quality}%` : 'غير متاح'],
+    ['جودة JPEG ', fp.estimated_jpeg_quality ? `~${fp.estimated_jpeg_quality}%` : 'غير متاح'],
   ];
   rows.forEach(([k, v]) => {
     const row = document.createElement('div');
@@ -198,7 +198,7 @@ function renderReport(data) {
     const heading = document.createElement('div');
     heading.className = 'report__field-label';
     heading.style.marginBottom = '8px';
-    heading.textContent = 'التطبيق المحتمل أنه صدّر الصورة (تخمين تقريبي، غير قطعي)';
+    heading.textContent = 'التطبيقات اللي ممكن مرت عليه الصورة';
     guessWrap.appendChild(heading);
 
     fp.guesses.forEach(g => {
@@ -218,7 +218,7 @@ function renderReport(data) {
   } else {
     const empty = document.createElement('p');
     empty.className = 'guess__empty';
-    empty.textContent = 'لا توجد مؤشرات كافية في بيانات الصورة لتخمين تطبيق مصدرها.';
+    empty.textContent = 'اوراقك ناقصه';
     guessWrap.appendChild(empty);
   }
   fingerprintDiv.appendChild(guessWrap);
