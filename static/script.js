@@ -227,8 +227,8 @@ function renderReport(data) {
   document.getElementById('fieldCount').textContent = `(${data.metadata_field_count})`;
   const note = document.getElementById('metadataNote');
   note.textContent = data.metadata_field_count > 0
-    ? 'كل الحقول التي استطاع ExifTool قراءتها من الملف، مجمّعة كما تُخزَّن أصلًا.'
-    : 'لم يتم العثور على أي بيانات وصفية — يُحتمل أنها حُذفت عند التصدير أو الرفع.';
+    ? 'المعلومات اللي طلعها من exiftool'
+    : 'مافيه معلومات - يمكن انحذفت بسبب نقل الصورة';
 
   const groupsWrap = document.getElementById('metadataGroups');
   groupsWrap.innerHTML = '';
