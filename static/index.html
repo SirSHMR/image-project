@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>أبيرتشر — تحليل بيانات الصور ومصدرها</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="masthead__mark">◎</div>
+    <div class="masthead__text">
+      <h1>أبيرتشر</h1>
+      <p>يقرأ كل بيانات الصورة الوصفية المخفية فيها — وإذا حُذفت، يحاول يخمّن الباقي.</p>
+    </div>
+  </header>
+
+  <section class="intake" id="intake">
+    <div class="intake__dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*" hidden />
+      <div class="intake__icon">＋</div>
+      <p class="intake__label">اسحب صورة هنا، أو اضغط لاختيار واحدة</p>
+      <p class="intake__hint" dir="ltr">JPEG · PNG · HEIC · TIFF · WEBP — حتى 20MB — لا يُحفظ أي شيء بعد التحليل</p>
+    </div>
+    <div class="intake__preview" id="preview" hidden>
+      <img id="previewImg" alt="معاينة الصورة المختارة" />
+      <div class="intake__preview-info">
+        <span id="previewName" dir="ltr"></span>
+        <button id="analyzeBtn" class="btn">حلّل الصورة</button>
+        <button id="resetBtn" class="btn btn--ghost">اختر صورة أخرى</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="status" id="status" hidden>
+    <div class="status__scan"></div>
+    <p>جارٍ قراءة البيانات…</p>
+  </section>
+
+  <section class="error" id="error" hidden></section>
+
+  <section class="report" id="report" hidden>
+
+    <div class="report__head">
+      <div class="report__field">
+        <span class="report__field-label">رقم العيّنة</span>
+        <span class="report__field-value" id="exhibitId" dir="ltr">—</span>
+      </div>
+      <div class="report__field">
+        <span class="report__field-label">تاريخ التحليل</span>
+        <span class="report__field-value" id="analyzedAt" dir="ltr">—</span>
+      </div>
+      <div class="report__field">
+        <span class="report__field-label">اسم الملف</span>
+        <span class="report__field-value" id="reportFileName" dir="ltr">—</span>
+      </div>
+    </div>
+
+    <div class="report__section">
+      <h2>أهم المعلومات</h2>
+      <p class="report__note">أبرز ما استطعنا استخراجه من الصورة، قبل التفاصيل الكاملة بالأسفل.</p>
+      <div class="highlights" id="highlightsBox"></div>
+    </div>
+
+    <div class="report__section">
+      <h2>التحقق من الملف</h2>
+      <p class="report__note">بصمات فريدة للبايتات المرفوعة بالضبط — تستخدم لإثبات أن الملف لم يتغيّر.</p>
+      <table class="kv-table" id="hashTable" dir="ltr"></table>
+    </div>
+
+    <div class="report__section">
+      <h2>تحليل المصدر</h2>
+      <p class="report__note">مستخرج من طبقة الضغط في الصورة نفسها، فيستمر بالعمل حتى لو حُذفت كل البيانات الوصفية بالأسفل.</p>
+      <div id="fingerprintBox"></div>
+    </div>
+
+    <div class="report__section">
+      <h2>البيانات الوصفية <span class="report__count" id="fieldCount"></span></h2>
+      <p class="report__note" id="metadataNote"></p>
+      <div id="metadataGroups"></div>
+    </div>
+
+  </section>
+
+  <footer class="footnote">
+    <p>مشروع بورتفوليو شخصي. تُعالج الصور في الذاكرة وتُحذف فورًا بعد التحليل — لا شيء يُسجَّل أو يُخزَّن.</p>
+  </footer>
+
+</div>
+
+<script src="/script.js"></script>
+</body>
+</html>
